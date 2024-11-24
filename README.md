@@ -1,7 +1,6 @@
 # Catálogo de Jogos Game Pass
 
 **Trabalho desenvolvido para a disciplina de Classificação e Pesquisa de Dados da Faculdade Antonio Meneghetti, ministrada pelo professor Cristiano Flores dos Santos.**  
-**Autores:** Pedro Henrique Nunes Silveira e Nicolas França.
 
 ## Descrição do Projeto
 Este sistema permite gerenciar um catálogo de jogos, possibilitando buscas baseadas em preço, faixa de preço e gênero. Utilize conceitos de Árvores Binárias de Busca (ABB) e tabelas hash para otimizar a classificação e pesquisa de dados.
