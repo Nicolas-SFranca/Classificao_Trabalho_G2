@@ -89,30 +89,41 @@ class MotorBuscaJogos:
         return self.catalogo_jogos.busca_por_faixa_preco(preco_minimo, preco_maximo)
 
     def buscar_jogos_por_genero(self, genero):
-        return self.generos.obter_jogos(genero)
+        jogo_ids = self.generos.obter_jogos(genero)
+        jogos_encontrados = []
+        for jogo_id in jogo_ids:
+            jogo = next((jogo for jogo in jogos_gamepass if jogo.jogo_id == jogo_id), None)
+            if jogo:
+                jogos_encontrados.append(jogo)
+        return jogos_encontrados
 
-# Criando uma instância do motor de busca de jogos
 motor_busca = MotorBuscaJogos()
 
 # Lista de jogos do Game Pass
 jogos_gamepass = [
-    Jogo(jogo_id=1, titulo="Halo Infinite", desenvolvedor="343 Industries", preco=59.99, genero="Ação"),
-    Jogo(jogo_id=2, titulo="Forza Horizon 5", desenvolvedor="Playground Games", preco=49.99, genero="Corrida"),
-    Jogo(jogo_id=3, titulo="Gears 5", desenvolvedor="The Coalition", preco=39.99, genero="Ação"),
-    Jogo(jogo_id=4, titulo="Sea of Thieves", desenvolvedor="Rare", preco=29.99, genero="Aventura"),
-    Jogo(jogo_id=5, titulo="Microsoft Flight Simulator", desenvolvedor="Asobo Studio", preco=89.99, genero="Simulação"),
+    Jogo(jogo_id=1, titulo="Halo Infinite", desenvolvedor="343 Industries", preco=109.99, genero="Ação"),
+    Jogo(jogo_id=2, titulo="Forza Horizon 5", desenvolvedor="Playground Games", preco=79.99, genero="Corrida"),
+    Jogo(jogo_id=3, titulo="Gears 5", desenvolvedor="The Coalition", preco=80.00, genero="Ação"),
+    Jogo(jogo_id=4, titulo="Sea of Thieves", desenvolvedor="Rare", preco=60.00, genero="Aventura"),
+    Jogo(jogo_id=5, titulo="Microsoft Flight Simulator", desenvolvedor="Asobo Studio", preco=49.99, genero="Simulação"),
+    Jogo(jogo_id=6, titulo="Starfield", desenvolvedor="Bethesda", preco=200.00, genero="RPG"),
+    Jogo(jogo_id=7, titulo="Psychonauts 2", desenvolvedor="Double Fine", preco=69.99, genero="Aventura"),
+    Jogo(jogo_id=8, titulo="Age of Empires IV", desenvolvedor="Relic Entertainment", preco=89.99, genero="Estratégia"),
+    Jogo(jogo_id=9, titulo="The Ascent", desenvolvedor="Neon Giant", preco=120.00, genero="Ação"),
+    Jogo(jogo_id=10, titulo="Diablo IV", desenvolvedor="Blizzard Entertainment", preco=150.00, genero="RPG"),
+    Jogo(jogo_id=11, titulo="FIFA 22", desenvolvedor="EA Sports", preco=200.00, genero="Esporte"),
+    Jogo(jogo_id=12, titulo="NBA 2K22", desenvolvedor="Visual Concepts", preco=200.00, genero="Esporte"),
+
 ]
 
-# Adicionando os jogos ao motor de busca
+
 for jogo in jogos_gamepass:
     motor_busca.adicionar_jogo(jogo)
 
-# Exemplo de busca por jogos de um gênero específico
-jogos_acao_ids = motor_busca.buscar_jogos_por_genero("Ação")
-for jogo_id in jogos_acao_ids:
-    jogo = motor_busca.buscar_jogo_por_preco(jogo_id)
-    if jogo:  # Verifica se o jogo foi encontrado
-        print(f"{jogo.titulo} - {jogo.preco} USD")
+
+jogos_acao = motor_busca.buscar_jogos_por_genero("Ação")
+for jogo in jogos_acao:
+    print(f"{jogo.titulo} - {jogo.preco} REAIS")
 
 def menu():
     while True:
@@ -146,13 +157,11 @@ def menu():
                 print("Nenhum jogo encontrado nessa faixa de preço.")
         elif opcao == "3":
             genero = input("Digite o gênero do jogo: ")
-            jogos_ids = motor_busca.buscar_jogos_por_genero(genero)
-            if jogos_ids:
+            jogos_encontrados = motor_busca.buscar_jogos_por_genero(genero)
+            if jogos_encontrados:
                 print("Jogos encontrados:")
-                for jogo_id in jogos_ids:
-                    jogo = motor_busca.buscar_jogo_por_preco(jogo_id)
-                    if jogo:  
-                        print(f"{jogo.titulo} - {jogo.preco} REAIS")
+                for jogo in jogos_encontrados:
+                    print(f"{jogo.titulo} - {jogo.preco} REAIS")
             else:
                 print("Nenhum jogo encontrado para esse gênero.")
         elif opcao == "4":
