@@ -117,10 +117,14 @@ for jogo_id in jogos_acao_ids:
 def menu():
     while True:
         print("\nMenu:")
+        print("\n==============================")
+        print("      Xbox Game Pass Menu      ")
+        print("==============================")
         print("1. Buscar jogo por preço")
         print("2. Buscar jogos por faixa de preço")
         print("3. Buscar jogos por gênero")
-        print("4. Sair")
+        print("4. Mostrar todos os jogos")
+        print("5. Sair")
         opcao = input("Escolha uma opção: ")
 
         if opcao == "1":
@@ -137,7 +141,7 @@ def menu():
             if jogos:
                 print("Jogos encontrados:")
                 for jogo in jogos:
-                    print(f"{jogo.titulo} - {jogo.preco} USD")
+                    print(f"{jogo.titulo} - {jogo.preco} REAIS")
             else:
                 print("Nenhum jogo encontrado nessa faixa de preço.")
         elif opcao == "3":
@@ -148,10 +152,14 @@ def menu():
                 for jogo_id in jogos_ids:
                     jogo = motor_busca.buscar_jogo_por_preco(jogo_id)
                     if jogo:  
-                        print(f"{jogo.titulo} - {jogo.preco} USD")
+                        print(f"{jogo.titulo} - {jogo.preco} REAIS")
             else:
                 print("Nenhum jogo encontrado para esse gênero.")
         elif opcao == "4":
+            print("Todos os jogos:")
+            for jogo in jogos_gamepass:
+                print(f"{jogo.titulo} - {jogo.preco} REAIS")
+        elif opcao == "5":
             break
         else:
             print("Opção inválida. Tente novamente.")
