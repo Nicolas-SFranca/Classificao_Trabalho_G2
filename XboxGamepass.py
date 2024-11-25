@@ -62,16 +62,29 @@ class ArvoreJogos:
                 self._busca_por_faixa_recursiva(no.direita, preco_minimo, preco_maximo, jogos_encontrados)
 
 class HashGeneros:
-    def __init__(self):
-        self.genero_para_jogos = {}
+    def __init__(self, tamanho=10):
+        self.tamanho = tamanho
+        self.tabela = [[] for _ in range(tamanho)]  # Lista de listas para encadeamento
+
+    def funcao_hash(self, genero):
+        # Soma dos valores ASCII dos caracteres do gênero
+        return sum(ord(c) for c in genero) % self.tamanho
 
     def adicionar_jogo(self, jogo):
-        if jogo.genero not in self.genero_para_jogos:
-            self.genero_para_jogos[jogo.genero] = []
-        self.genero_para_jogos[jogo.genero].append(jogo.jogo_id)
+        indice = self.funcao_hash(jogo.genero)
+        #Evitar duplicatas
+        for item in self.tabela[indice]:
+            if item[0] == jogo.genero:
+                item[1].append(jogo.jogo_id)
+                return
+        self.tabela[indice].append((jogo.genero, [jogo.jogo_id]))
 
     def obter_jogos(self, genero):
-        return self.genero_para_jogos.get(genero, [])
+        indice = self.funcao_hash(genero)
+        for item in self.tabela[indice]:
+            if item[0] == genero:
+                return item[1]
+        return []
 
 class MotorBuscaJogos:
     def __init__(self):
@@ -96,7 +109,7 @@ class MotorBuscaJogos:
             if jogo:
                 jogos_encontrados.append(jogo)
         return jogos_encontrados
-# Criando uma instância do motor de busca de jogos
+
 motor_busca = MotorBuscaJogos()
 
 # Lista de jogos do Game Pass
