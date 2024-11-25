@@ -96,7 +96,7 @@ class MotorBuscaJogos:
             if jogo:
                 jogos_encontrados.append(jogo)
         return jogos_encontrados
-
+# Criando uma instância do motor de busca de jogos
 motor_busca = MotorBuscaJogos()
 
 # Lista de jogos do Game Pass
@@ -142,7 +142,7 @@ def menu():
             preco = float(input("Digite o preço do jogo: "))
             jogo = motor_busca.buscar_jogo_por_preco(preco)
             if jogo:
-                print(f"Jogo encontrado: {jogo.titulo} - {jogo.preco} USD")
+                print(f"Jogo encontrado: {jogo.titulo} - {jogo.preco} REAIS")
             else:
                 print("Nenhum jogo encontrado com esse preço.")
         elif opcao == "2":
